@@ -10,7 +10,11 @@ st.markdown("This is a demo of how to integrate Google Sheets with Streamlit.")
 conn = GSheetsConnection("gsheets")
 
 
-existing_data = conn.read(worksheet="Vendors", usecols=list(range(6)), ttl=5)
+# Fetch existing data from Google Sheets
+existing_data = conn.read(worksheet="Vendors")
+existing_data = pd.DataFrame(existing_data)
+existing_data = existing_data.dropna(how='all')
+
 
 existing_data  = existing_data.dropna(how='all')
 

@@ -1,24 +1,17 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
-import pandas as pd 
-conn = GSheetsConnection("gsheets")
+import pandas as pd
 
+# Display Title and Description
+st.title("Vendors Management Portal")
+st.markdown("Enter the details of the new vendor below.")
 
-st.title("Google Sheets Integration")
-st.markdown("This is a demo of how to integrate Google Sheets with Streamlit.")
- 
-conn = GSheetsConnection("gsheets")
+# Establishing a Google Sheets connection
+conn = st.connection("gsheets", type=GSheetsConnection)
 
-
-# Fetch existing data from Google Sheets
-existing_data = conn.read(worksheet="Vendors")
-existing_data = pd.DataFrame(existing_data)
-existing_data = existing_data.dropna(how='all')
-
-
-existing_data  = existing_data.dropna(how='all')
-
-
+# Fetch existing vendors data
+existing_data = conn.read(worksheet="Vendors", usecols=list(range(6)), ttl=5)
+existing_data = existing_data.dropna(how="all")
 
 # List of Business Types and Products
 BUSINESS_TYPES = [
